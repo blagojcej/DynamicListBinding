@@ -1,0 +1,33 @@
+﻿@model DynamicListBinding.Models.Building
+@{
+    ViewBag.Title = "Create";
+}
+
+@section Scripts 
+{
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#add-room').on('click', function ()  {
+                jQuery.get('/Building/AddRoom').done(function (html) {
+                    $('#rooms-list').append(html);
+                });
+            });
+        });
+    </script>
+}
+
+@using (Html.BeginForm())
+{ 
+    <h2>Create</h2>
+
+    <h3>Building</h3>
+    @Html.EditorFor(x => x)
+
+    <h3>Rooms</h3>
+    <div id="rooms-list">
+        @Html.EditorForMany(x => x.Rooms, x => x.Index)
+    </div>
+
+    <input type="submit" />
+    <input type="button" id="add-room" value="Add" />
+}
